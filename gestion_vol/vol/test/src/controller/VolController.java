@@ -54,7 +54,7 @@ public class VolController {
                                  @RequestParameter("arrivee") Integer ville_arrive ) throws ClassNotFoundException, SQLException {
 
     // Crée un objet ModelAndView pour la page de succès
-    ModelAndView reussi = new ModelAndView("showFormulaire");
+    ModelAndView reussi = new ModelAndView("/views/login_reussi");
 
     // Connexion à la base de données
     Connection c = DbConnection.getConnection();
@@ -134,7 +134,7 @@ public ModelAndView getListeVol() {
 @Get()
 public ModelAndView deleteVol(@RequestParameter("id") Integer id_vol) {
 
-    ModelAndView mav = new ModelAndView("showFormulaire");
+    ModelAndView mav = new ModelAndView("/views/login_reussi");
     try {
        Vol.supprimerVol(null, id_vol);
     } catch (Exception e) {
@@ -182,7 +182,7 @@ public ModelAndView updateVol(        @RequestParameter("id_vol") Integer id_vol
 
      Connection c = DbConnection.getConnection();
     
-     ModelAndView mav = new ModelAndView("list_vol");
+     ModelAndView mav = new ModelAndView("/views/login_reussi");
 
     Avion avion = new Avion();
     avion.setId(id_avion);
@@ -230,54 +230,56 @@ public ModelAndView updateVol(        @RequestParameter("id_vol") Integer id_vol
 
   }
 
-  @Url(value="/app/criteria")
-  @Get()
-  public ModelAndView findByCriteria() {
-      ModelAndView mav = new ModelAndView("/views/rechercher");
+//   @Url(value="/app/criteria")
+//   @Get()
+//   public ModelAndView findByCriteria() {
+//       ModelAndView mav = new ModelAndView("/views/rechercher");
 
-      System.out.println("je suis dans rechercheByCriteria");
-      List<Avion> avions = new  ArrayList<>();
-      List<Ville> villes = new ArrayList<>();
+//       System.out.println("je suis dans rechercheByCriteria");
+//       List<Avion> avions = new  ArrayList<>();
+//       List<Ville> villes = new ArrayList<>();
    
-      try {
-          avions =  Avion.getAll(null);
-          villes = Ville.getAll(null);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
+//       try {
+//           avions =  Avion.getAll(null);
+//           villes = Ville.getAll(null);
+//       } catch (Exception e) {
+//          e.printStackTrace();
+//       }
 
-      mav.add("avions",avions);
-      mav.add("ville", villes);
+//       mav.add("avions",avions);
+//       mav.add("ville", villes);
       
-      return mav;
-  }
+//       return mav;
+//   }
 
 
 
-@Url(value="/app/resultat")
-@Post()
-public ModelAndView resultatRecherche(@RequestParameter("date1") String depart, 
-                        @RequestParameter("date2") String arrivee,
-                        @RequestParameter("avion") Integer id_avion,
-                        @RequestParameter("depart") Integer ville_depart, 
-                        @RequestParameter("arrivee") Integer ville_arrive) {
+// @Url(value="/app/resultat")
+// @Post()
+// public ModelAndView resultatRecherche(@RequestParameter("date1") String depart, 
+//                         @RequestParameter("date2") String arrivee,
+//                         @RequestParameter("avion") Integer id_avion,
+//                         @RequestParameter("depart") Integer ville_depart, 
+//                         @RequestParameter("arrivee") Integer ville_arrive) {
 
-    ModelAndView mav = new ModelAndView("/views/recherche_result");
-    List<Vol> vols = new ArrayList<>();
-    try {
-    vols = Vol.rechercherVols(null, depart, arrivee, id_avion, ville_depart, ville_arrive);
-    System.out.println("taillde des resultats : " + vols.size());
+//     ModelAndView mav = new ModelAndView("/views/recherche_result");
+//     List<Vol> vols = new ArrayList<>();
+//     try {
+//     vols = Vol.rechercherVols(null, depart, arrivee, id_avion, ville_depart, ville_arrive);
+//     System.out.println("taillde des resultats : " + vols.size());
     
-    } catch (Exception e) {
-       e.printStackTrace();
-    }
-    mav.add("vols",vols);
-    return mav;
-}
+//     } catch (Exception e) {
+//        e.printStackTrace();
+//     }
+//     mav.add("vols",vols);
+//     return mav;
+// }
 
 @Url(value="/app/annule")
 @Get()
-public String annulationVol(@RequestParameter("id") Integer id_vol) {
+public ModelAndView annulationVol(@RequestParameter("id") Integer id_vol) {
+
+    ModelAndView mav = new ModelAndView("/views/login_reussi");
 
     try {
         Connection c = null;
@@ -285,12 +287,12 @@ public String annulationVol(@RequestParameter("id") Integer id_vol) {
             c =  DbConnection.getConnection();
         } 
          Vol.annulerVol(c, id_vol);
-       return "reussi";
     } catch (Exception e) {
        e.printStackTrace();
+       return null;
     }
 
-    return "erreur";
+    return mav;
 }
 
 

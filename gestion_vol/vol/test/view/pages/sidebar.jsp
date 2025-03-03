@@ -41,12 +41,6 @@
         <span class="hide-menu">Liste des promotions</span>
       </a>
     </li>
-    <li class="sidebar-item">
-      <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
-        <iconify-icon icon="solar:text-field-focus-line-duotone"></iconify-icon>
-        <span class="hide-menu">Typography</span>
-      </a>
-    </li>
     <li>
       <span class="sidebar-divider lg"></span>
     </li>
@@ -58,12 +52,6 @@
       <a class="sidebar-link" href="list_reservation" aria-expanded="false">
         <iconify-icon icon="solar:login-3-line-duotone"></iconify-icon>
         <span class="hide-menu">liste de reservation</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a class="sidebar-link" href="reservation" aria-expanded="false">
-        <iconify-icon icon="solar:user-plus-rounded-line-duotone"></iconify-icon>
-        <span class="hide-menu">Enregistrer</span>
       </a>
     </li>
     <li>

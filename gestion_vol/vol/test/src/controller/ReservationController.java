@@ -24,7 +24,7 @@ public class ReservationController {
     @Url(value="/app/reservation")
     @Get()
     public ModelAndView reserver() {
-        ModelAndView mav = new ModelAndView("/views/reservation");
+        ModelAndView mav = new ModelAndView("/views/login_reussi_client");
 
         List<Vol> vols = new ArrayList<>();
         List<Typesiege> types = new ArrayList<>();
@@ -51,7 +51,7 @@ public ModelAndView saveReservation(@RequestParameter("vol") Integer vol,
                        @RequestParameter("passager") Integer passager,
                        @RequestParameter("passeport") MultiPart file) {
 
-    ModelAndView mav = new ModelAndView("list_reservation");
+    ModelAndView mav = new ModelAndView("/views/login_reussi_client");
     try {
         System.out.println("Passager trouvé");
 

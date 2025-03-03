@@ -1,4 +1,5 @@
 E:\Studies\S6\framework\gestion_vol\vol\test\src\connection\DbConnection.java
+E:\Studies\S6\framework\gestion_vol\vol\test\src\controller\ClientController.java
 E:\Studies\S6\framework\gestion_vol\vol\test\src\controller\ConfigurationController.java
 E:\Studies\S6\framework\gestion_vol\vol\test\src\controller\LoginClientController.java
 E:\Studies\S6\framework\gestion_vol\vol\test\src\controller\LoginController.java

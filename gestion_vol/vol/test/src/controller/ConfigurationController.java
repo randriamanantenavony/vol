@@ -31,19 +31,20 @@ public class ConfigurationController {
 
 @Url(value="/app/config")
 @Post()
-public String saveConfig(@RequestParameter("heure1") Integer reservation, @RequestParameter("heure2") Integer annulation) {
+public ModelAndView saveConfig(@RequestParameter("heure1") Integer reservation, @RequestParameter("heure2") Integer annulation) {
+
+    ModelAndView mav = new ModelAndView("/views/login_reussi");
 
     try {
        Configuration c = new Configuration();
        c.setIdHeureLimiteReservation(reservation);
        c.setIdHeureLimiteAnnulation(annulation);
        c.save();
-       return "reussi";
-    } catch (Exception e) {
+   } catch (Exception e) {
        e.printStackTrace();
     }
 
-    return "erreur";
+    return mav;
 }
 
 }

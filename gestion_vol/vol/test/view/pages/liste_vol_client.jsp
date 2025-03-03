@@ -29,7 +29,7 @@
           </div>
         </div>
         <!-- Sidebar navigation-->
-        <%@ include file="sidebar.jsp" %>
+        <%@ include file="sidebar_client.jsp" %>
 
         <!-- End Sidebar navigation -->
       </div>
@@ -43,40 +43,41 @@
       <!--  Header End -->
 
       <% 
-      List<Promotion> promotions = (List<Promotion>) request.getAttribute("promo"); 
+      List<Vol> vols = (List<Vol>) request.getAttribute("vols"); 
   
       // Vérification si la liste d'avions n'est pas nulle ou vide
-      if (promotions != null && !promotions.isEmpty()) { 
+      if (vols != null && !vols.isEmpty()) { 
     %>
       <div class="body-wrapper-inner">
         <div class="container-fluid">
         
             <div class="card">
-                <% for (Promotion p : promotions) {  %>
+            <% for (Vol v : vols) {  %>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <h5 class="card-title fw-semibold mb-4">Vol0000<%= v.getId() %></h5>
+                  <div class="card">
+                    <img src="${pageContext.request.contextPath}/assets/images/products/vol_logo.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h5 class="card-title fw-semibold mb-4">Vol0000<%= p.getIdVol() %></h5>
-                                <div class="card">
-                                    <img src="${pageContext.request.contextPath}/assets/images/products/vol_logo.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Détails de la promotion :</h5>
-                                        <p class="card-text">Type de siège : <%= p.getTypeSiege() %></p>
-                                        <p class="card-text">Nombre de siège en promo : <%= p.getNombre() %> </p>
-                                        <p class="card-text">Prix de base : <%= p.getPrix() %> €</p>
-                                        <p class="card-text">Pourcentage de promotion : <%= p.getPourcentagePromotion() %> %</p>
-                                        <p class="card-text">Prix réel après promotion : <%= p.getPrixReel() %> €</p>
-                          
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      <h5 class="card-title"><%= v.getIdAvion().getNom() %> : <%= v.getEtat() %></h5>
+                      <p class="card-text">Heure de depart : <%= v.getDateHeureDepart() %></p>
+                      <p class="card-text">Heure d'arrivee : <%= v.getDateHeureArrivee() %></p>
+                      <p class="card-text">Ville de depart : <%= v.getVilleDepart().getNom() %></p>
+                      <p class="card-text">Ville d'arrivee : <%= v.getVilleArrivee().getNom() %></p>
+
                     </div>
-                <% } %>
+                  </div>
+                </div>
+              </div>
             </div>
-            
+        
+
           <%  
-        }   
+        }  
+        
+      }  
       else { %>
         <p>Aucun vol disponible.</p>
     <% }  %>

@@ -200,21 +200,60 @@ public class Vol {
         if (connection == null || connection.isClosed()) {
             connection = DbConnection.getConnection();
         }
-
-        PreparedStatement statement = null;
+    
+        PreparedStatement deletePromotionStmt = null;
+        PreparedStatement deleteVolDetailStmt = null;
+        PreparedStatement deleteVolStmt = null;
+    
         try {
-            String query = "DELETE FROM vol WHERE id = ?";
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, idVol);
-
-            int lignesAffectees = statement.executeUpdate();
-
+            // Désactiver l'autocommit pour exécuter toutes les suppressions en une seule transaction
+            connection.setAutoCommit(false);
+    
+            // Supprimer d'abord les enregistrements dans la table promotion
+            String deletePromotionQuery = "DELETE FROM promotion WHERE id_vol = ?";
+            deletePromotionStmt = connection.prepareStatement(deletePromotionQuery);
+            deletePromotionStmt.setInt(1, idVol);
+            deletePromotionStmt.executeUpdate();
+    
+            // Ensuite, supprimer les enregistrements dans la table vol_detail
+            String deleteVolDetailQuery = "DELETE FROM vol_detail WHERE id_vol = ?";
+            deleteVolDetailStmt = connection.prepareStatement(deleteVolDetailQuery);
+            deleteVolDetailStmt.setInt(1, idVol);
+            deleteVolDetailStmt.executeUpdate();
+    
+            // Enfin, supprimer le vol
+            String deleteVolQuery = "DELETE FROM vol WHERE id = ?";
+            deleteVolStmt = connection.prepareStatement(deleteVolQuery);
+            deleteVolStmt.setInt(1, idVol);
+            int lignesAffectees = deleteVolStmt.executeUpdate();
+    
+            // Valider la transaction
+            connection.commit();
+    
+        } catch (SQLException e) {
+            // Annuler la transaction en cas d'erreur
+            if (connection != null) {
+                connection.rollback();
+            }
+            throw e;
         } finally {
-            if (statement != null) {
-                statement.close();
+            // Réactiver l'autocommit
+            if (connection != null) {
+                connection.setAutoCommit(true);
+            }
+            // Fermeture des statements
+            if (deletePromotionStmt != null) {
+                deletePromotionStmt.close();
+            }
+            if (deleteVolDetailStmt != null) {
+                deleteVolDetailStmt.close();
+            }
+            if (deleteVolStmt != null) {
+                deleteVolStmt.close();
             }
         }
     }
+    
 
     public static boolean mettreAJourVol(Connection connexion, Vol vol) throws SQLException {
         PreparedStatement statement = null;
